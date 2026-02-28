@@ -1,4 +1,4 @@
-package com.wellsfargo.entity;
+package com.wellsfargo.counselor.entity;
 
 import jakarta.persistence.*;
 
@@ -18,17 +18,23 @@ public class Client {
     private String email;
     private String phoneNumber;
 
+    // Many Clients belong to one Advisor
     @ManyToOne
     @JoinColumn(name = "advisor_id", nullable = false)
     private Advisor advisor;
 
+    // One Client has one Portfolio
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
     private Portfolio portfolio;
 
-    public Client() {}
+    // Default constructor (required by JPA)
+    protected Client() {
+    }
 
-    public Client(String firstName, String lastName, String email,
-                  String phoneNumber, Advisor advisor, Portfolio portfolio) {
+    // Constructor initializing all fields except ID
+    public Client(String firstName, String lastName,
+                  String email, String phoneNumber,
+                  Advisor advisor, Portfolio portfolio) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -37,23 +43,57 @@ public class Client {
         this.portfolio = portfolio;
     }
 
-    public Long getClientId() { return clientId; }
+    // Getters & Setters
 
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public Long getClientId() {
+        return clientId;
+    }
 
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
+    public String getFirstName() {
+        return firstName;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-    public String getPhoneNumber() { return phoneNumber; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    public String getLastName() {
+        return lastName;
+    }
 
-    public Advisor getAdvisor() { return advisor; }
-    public void setAdvisor(Advisor advisor) { this.advisor = advisor; }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-    public Portfolio getPortfolio() { return portfolio; }
-    public void setPortfolio(Portfolio portfolio) { this.portfolio = portfolio; }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Advisor getAdvisor() {
+        return advisor;
+    }
+
+    public void setAdvisor(Advisor advisor) {
+        this.advisor = advisor;
+    }
+
+    public Portfolio getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
+    }
 }

@@ -1,4 +1,4 @@
-package com.wellsfargo.entity;
+package com.wellsfargo.counselor.entity;
 
 import jakarta.persistence.*;
 import java.util.List;
@@ -10,25 +10,42 @@ public class Portfolio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long portfolioId;
 
+    // One Portfolio belongs to one Client
     @OneToOne
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
+    // One Portfolio can have many Securities
     @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL)
     private List<Security> securities;
 
-    public Portfolio() {}
+    // Default constructor (required by JPA)
+    protected Portfolio() {
+    }
 
+    // Constructor initializing all fields except ID
     public Portfolio(Client client, List<Security> securities) {
         this.client = client;
         this.securities = securities;
     }
 
-    public Long getPortfolioId() { return portfolioId; }
+    public Long getPortfolioId() {
+        return portfolioId;
+    }
 
-    public Client getClient() { return client; }
-    public void setClient(Client client) { this.client = client; }
+    public Client getClient() {
+        return client;
+    }
 
-    public List<Security> getSecurities() { return securities; }
-    public void setSecurities(List<Security> securities) { this.securities = securities; }
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public List<Security> getSecurities() {
+        return securities;
+    }
+
+    public void setSecurities(List<Security> securities) {
+        this.securities = securities;
+    }
 }
